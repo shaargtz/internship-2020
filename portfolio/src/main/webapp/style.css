@@ -8,10 +8,7 @@
   margin-top: 20px;
 }
 
-.link {
-  text-decoration: none;
-}
-
+.link,
 .link:hover {
   text-decoration: none;
 }
