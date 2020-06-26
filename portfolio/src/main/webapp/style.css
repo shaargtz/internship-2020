@@ -12,6 +12,10 @@
   text-decoration: none;
 }
 
+.link:hover {
+  text-decoration: none;
+}
+
 .icon {
   height: 20px;
   width: 20px;
