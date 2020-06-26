@@ -7,3 +7,12 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+}
