@@ -26,7 +26,5 @@ function sendToRandomVideo() {
 
   const randomVideo = videos[Math.floor(Math.random() * videos.length)];
 
-  document.getElementById('video-button').onclick = function() {
-    document.getElementById("link_b").setAttribute("href", "https://www.google.com");
-  }
+  window.open(randomVideo);
 }
