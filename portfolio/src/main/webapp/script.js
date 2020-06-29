@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Sends the user to a random Youtube video on a different tab
+ * Sends the user to a random Youtube video on a different tab.
  */
 function sendToRandomVideo() {
   const videos = [
