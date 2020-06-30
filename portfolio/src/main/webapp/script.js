@@ -13,16 +13,18 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Sends the user to a random Youtube video on a different tab.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function sendToRandomVideo() {
+  const videos = [
+    "https://www.youtube.com/watch?v=Ng_Im-qsWzc&list=LLGpjNAdp_solk9m7e4SaPsg&index=8",
+    "https://www.youtube.com/watch?v=sYd_-pAfbBw&list=LLGpjNAdp_solk9m7e4SaPsg&index=48",
+    "https://www.youtube.com/watch?v=xuCn8ux2gbs&list=LLGpjNAdp_solk9m7e4SaPsg&index=61",
+    "https://www.youtube.com/watch?v=huEtJw7pfLk&list=LLGpjNAdp_solk9m7e4SaPsg&index=68",
+    "https://www.youtube.com/watch?v=Uu5zGHjRaMo&list=LLGpjNAdp_solk9m7e4SaPsg&index=22",
+  ];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const randomVideo = videos[Math.floor(Math.random() * videos.length)];
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  window.open(randomVideo);
 }
