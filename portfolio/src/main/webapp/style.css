@@ -4,6 +4,13 @@
   width: 650px;
 }
 
+#welcome-message {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  font-size: 40px;
+}
+
 .link,
 .link:hover {
   text-decoration: none;
