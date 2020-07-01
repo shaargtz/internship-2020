@@ -35,5 +35,5 @@ function sendToRandomVideo() {
 async function fetchWelcomeMessage() {
   const response = await fetch('/data');
   const message = await response.text();
-  document.getElementById('welcome-message').innerText = message;
+  document.getElementById('welcome-message-container').innerText = message;
 }
