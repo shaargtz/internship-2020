@@ -4,10 +4,6 @@
   width: 650px;
 }
 
-#greeting-container {
-  margin-top: 20px;
-}
-
 .link,
 .link:hover {
   text-decoration: none;
