@@ -28,3 +28,12 @@ function sendToRandomVideo() {
 
   window.open(randomVideo);
 }
+
+/**
+ * Fetches message from server and adds it to the DOM.
+ */
+async function fetchWelcomeMessage() {
+  const response = await fetch('/data');
+  const message = await response.text();
+  document.getElementById('welcome-message-container').innerText = message;
+}
