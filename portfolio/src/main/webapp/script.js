@@ -41,3 +41,10 @@ async function fetchComments() {
     commentsContainer.appendChild(createListElement(comment));
   });
 }
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
