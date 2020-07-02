@@ -29,13 +29,12 @@ public class DataServlet extends HttpServlet {
 
   private final ArrayList<String> comments = new ArrayList<String>();
 
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Dummy comments for list
     comments.add("Test 1");
     comments.add("Test 2");
     comments.add("Test 3");
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-   
 
     // Create an object that has the list of comments
     TestCommentObject commentList = new TestCommentObject(comments);
