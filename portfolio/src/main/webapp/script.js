@@ -35,7 +35,7 @@ function sendToRandomVideo() {
 async function fetchComments() {
   const response = await fetch('/data');
   const commentsObject = await response.json();
-  commentsContainer = document.getElementById('comments-container')
+  const commentsContainer = document.getElementById('comments-container')
       .innerHTML = '';
   commentsObject.commentList.forEach(comment => {
     commentsContainer.appendChild(createListElement(comment));
