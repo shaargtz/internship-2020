@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.servlets.TestCommentObject;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -38,9 +39,9 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println("Hello stranger! Welcome to my portfolio");
   }
 
-  private String convertToJsonUsingGson(ServerStats serverStats) {
+  private String convertToJsonUsingGson(TestCommentObject commentList) {
     Gson gson = new Gson();
-    String json = gson.toJson(serverStats);
+    String json = gson.toJson(commentList);
     return json;
   }
 }
