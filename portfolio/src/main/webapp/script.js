@@ -30,10 +30,14 @@ function sendToRandomVideo() {
 }
 
 /**
- * Fetches message from server and adds it to the DOM.
+ * Fetches comments from server and adds them to the DOM.
  */
-async function fetchWelcomeMessage() {
+async function fetchComments() {
   const response = await fetch('/data');
-  const message = await response.text();
-  document.getElementById('welcome-message-container').innerText = message;
+  const commentsObject = await response.json();
+  commentsContainer = document.getElementById('comments-container')
+      .innerHTML = '';
+  commentsObject.commentList.forEach(comment => {
+    commentsContainer.appendChild(createListElement(comment));
+  });
 }
