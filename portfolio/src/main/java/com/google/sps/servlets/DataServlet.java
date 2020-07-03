@@ -27,13 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private final ArrayList<String> comments = new ArrayList<String>();
+  TestCommentObject commentList = new TestCommentObject(comments);
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Create an object that has the list of comments
-    TestCommentObject commentList = new TestCommentObject(comments);
-
     // Convert object to JSON
     String json = convertToJsonUsingGson(commentList);
     
