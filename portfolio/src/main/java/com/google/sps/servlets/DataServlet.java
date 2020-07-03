@@ -21,7 +21,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.servlets.CommentList;
 import com.google.sps.servlets.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,13 +33,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  CommentList commentList = new CommentList();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Convert object to JSON
-    String json = convertToJson(commentList);
     
+
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -49,7 +45,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String commentString = request.getParameter("comment-input");
-    commentList.addComment(commentString);
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
