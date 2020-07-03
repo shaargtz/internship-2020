@@ -15,7 +15,7 @@
 package com.google.sps.servlets;
 
 import java.util.ArrayList;
-import com.google.sps.servlets.TestCommentObject;
+import com.google.sps.servlets.CommentList;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  TestCommentObject commentList = new TestCommentObject();
+  CommentList commentList = new CommentList();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
