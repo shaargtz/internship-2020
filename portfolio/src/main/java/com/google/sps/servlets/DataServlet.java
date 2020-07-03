@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  TestCommentObject commentList = new TestCommentObject(comments);
+  TestCommentObject commentList = new TestCommentObject();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
