@@ -37,6 +37,9 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
 
+    Gson gson = new Gson();
+    String json = gson.toJson();
+
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -57,12 +60,4 @@ public class DataServlet extends HttpServlet {
     
     response.sendRedirect("/index.html");
   }
-
-  private String convertToJson(CommentList commentList) {
-    Gson gson = new Gson();
-    String json = gson.toJson(commentList);
-    return json;
-  }
 }
-
-
