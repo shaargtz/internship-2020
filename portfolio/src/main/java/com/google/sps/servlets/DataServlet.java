@@ -35,10 +35,23 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    ArrayList<Comment> comments = new ArrayList<Comment>();
+    for (Entity entity : results.asIterable()) {
+      String text = (String) entity.getProperty("text");
+      String author = (String) entity.getProperty("author");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      Comment comment = new Comment(text, author, timestamp);
+      comments.add(comment);
+    }
 
     Gson gson = new Gson();
-    String json = gson.toJson();
+    String json = gson.toJson(comments);
 
     // Send the JSON as the response
     response.setContentType("application/json;");
