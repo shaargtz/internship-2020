@@ -45,6 +45,7 @@ async function fetchComments() {
 /** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
+  liElement.setAttribute('class', 'list-group-item');
   liElement.innerText = text;
   return liElement;
 }
