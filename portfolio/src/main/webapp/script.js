@@ -38,14 +38,20 @@ async function fetchComments() {
   const commentsContainer = document.getElementById('comments-list');
   commentsContainer.innerHTML = '';
   commentsObject.forEach(comment => {
-    commentsContainer.appendChild(createListElement(comment.text));
+    commentsContainer.appendChild(createListElement(
+      comment.text, comment.author));
   });
 }
 
 /** Creates an <li> element containing text. */
-function createListElement(text) {
+function createListElement(text, author) {
   const liElement = document.createElement('li');
   liElement.setAttribute('class', 'list-group-item');
   liElement.innerText = text;
+  const smallElement = document.createElement('small');
+  smallElement.setAttribute('class', 'text-muted');
+  smallElement.innerText = author;
+  liElement.appendChild(document.createElement('br'));
+  liElement.appendChild(smallElement);
   return liElement;
 }
