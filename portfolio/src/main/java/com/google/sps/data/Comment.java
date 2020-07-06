@@ -1,5 +1,6 @@
 package com.google.sps.servlets;
 
+/** Object for a single comment. */
 public final class Comment {
 
   private final String text;
