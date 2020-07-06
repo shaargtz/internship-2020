@@ -73,12 +73,4 @@ public class DataServlet extends HttpServlet {
     
     response.sendRedirect("/index.html");
   }
-<<<<<<< HEAD
-=======
-
-  private String convertToJson(CommentList commentList) {
-    Gson gson = new Gson();
-    return gson.toJson(commentList);
-  }
->>>>>>> master
 }
