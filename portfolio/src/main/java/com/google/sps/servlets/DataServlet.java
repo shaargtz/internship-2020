@@ -31,18 +31,18 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Dummy comments for list
+    // Dummy comments for list.
     comments.add("Test 1");
     comments.add("Test 2");
     comments.add("Test 3");
 
-    // Create an object that has the list of comments
+    // Create an object that has the list of comments.
     TestCommentObject commentList = new TestCommentObject(comments);
 
-    // Convert object to JSON
+    // Convert object to JSON.
     String json = convertToJsonUsingGson(commentList);
     
-    // Send the JSON as the response
+    // Send the JSON as the response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
