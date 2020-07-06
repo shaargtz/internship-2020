@@ -19,14 +19,23 @@ public class VideoServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    int nextVideoIndex = 
+    Random randomGenerator = new Random();
+
+    // Generate a random index from 0 to 5.
+    int nextVideoIndex = randomGenerator.nextInt(5);
+
+    // Check that the last index is not the same as the next.
+    if (nextVideoIndex == lastVideoIndex) {
+      nextVideoIndex++;
+      nextVideoIndex = nextVideoIndex % 5;
+    }
 
     String json = "{";
     json += "\"nextVideoIndex\": ";
     json += "\"" + nextVideoIndex + "\"";
     json += "}";
 
-
+    lastVideoIndex = nextVideoIndex;
     
     // Send the JSON as the response.
     response.setContentType("application/json;");
