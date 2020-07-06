@@ -34,7 +34,7 @@ public class DataServlet extends HttpServlet {
     // Convert object to JSON
     String json = convertToJson(commentList);
     
-    // Send the JSON as the response
+    // Send the JSON as the response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -49,9 +49,6 @@ public class DataServlet extends HttpServlet {
 
   private String convertToJson(CommentList commentList) {
     Gson gson = new Gson();
-    String json = gson.toJson(commentList);
-    return json;
+    return gson.toJson(commentList);
   }
 }
-
-
