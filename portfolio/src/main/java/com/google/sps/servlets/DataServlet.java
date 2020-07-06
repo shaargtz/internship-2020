@@ -37,6 +37,7 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
+    // Datastore is being queried for user comments.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
@@ -53,7 +54,7 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
 
-    // Send the JSON as the response
+    // Send the JSON as the response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -63,11 +64,13 @@ public class DataServlet extends HttpServlet {
     String commentString = request.getParameter("comment-input");
     long timestamp = System.currentTimeMillis();
 
+    // New entity for Datastore is created.
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("text", commentString);
     commentEntity.setProperty("author", "anonymous");
     commentEntity.setProperty("timestamp", timestamp);
 
+    // Datastore is used to store comments remotely.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
     
