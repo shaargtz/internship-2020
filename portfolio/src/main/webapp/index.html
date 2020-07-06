@@ -11,7 +11,6 @@
     <script src="https://kit.fontawesome.com/96f9ad965c.js" crossorigin="anonymous"></script>
   </head>
   <body onload="fetchComments()">
-    <ul id="comments-container"></ul>
     <div id="content">
       <div class="media my-3">
         <img src="./images/me.jpg" alt="Picture of Shaar" class="img-thumbnail" id="profile-picture">
@@ -71,6 +70,16 @@
       </table>
       <div class="text-center my-5">
         <button type="button" class="btn btn-dark" onclick="sendToRandomVideo()">Click for a random video</button>
+      </div>
+      <div id="comments-container">
+        <form action=/data method="POST">
+          <div class="form-group">
+            <label for="commentTextArea">Leave a comment</label>
+            <textarea class="form-control" id="commentTextArea" name="comment-input" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <ul class="list-group my-3" id="comments-list"></ul>
       </div>
     </div>
   </body>

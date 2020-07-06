@@ -15,7 +15,7 @@
 package com.google.sps.servlets;
 
 import java.util.ArrayList;
-import com.google.sps.servlets.TestCommentObject;
+import com.google.sps.servlets.CommentList;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -23,31 +23,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private final ArrayList<String> comments = new ArrayList<String>();
+  CommentList commentList = new CommentList();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Dummy comments for list.
-    comments.add("Test 1");
-    comments.add("Test 2");
-    comments.add("Test 3");
-
-    // Create an object that has the list of comments.
-    TestCommentObject commentList = new TestCommentObject(comments);
-
     // Convert object to JSON.
-    String json = convertToJsonUsingGson(commentList);
+    String json = convertToJson(commentList);
     
     // Send the JSON as the response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  private String convertToJsonUsingGson(TestCommentObject commentList) {
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String commentString = request.getParameter("comment-input");
+    commentList.addComment(commentString);
+    
+    response.sendRedirect("/index.html");
+  }
+
+  private String convertToJson(CommentList commentList) {
     Gson gson = new Gson();
     return gson.toJson(commentList);
   }

@@ -35,9 +35,9 @@ function sendToRandomVideo() {
 async function fetchComments() {
   const response = await fetch('/data');
   const commentsObject = await response.json();
-  const commentsContainer = document.getElementById('comments-container');
+  const commentsContainer = document.getElementById('comments-list');
   commentsContainer.innerHTML = '';
-  commentsObject.commentList.forEach(comment => {
+  commentsObject.comments.forEach(comment => {
     commentsContainer.appendChild(createListElement(comment));
   });
 }
@@ -45,6 +45,7 @@ async function fetchComments() {
 /** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
+  liElement.setAttribute('class', 'list-group-item');
   liElement.innerText = text;
   return liElement;
 }
