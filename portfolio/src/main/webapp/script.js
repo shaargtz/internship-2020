@@ -30,7 +30,8 @@ function sendToRandomVideo() {
 }
 
 /**
- * Fetches comments from server and adds them to the DOM.
+ * Fetches comments from server, wraps each in an <li> element, 
+ * and adds them to the DOM.
  */
 async function fetchComments() {
   const response = await fetch('/data');
@@ -43,7 +44,10 @@ async function fetchComments() {
   });
 }
 
-/** Creates an <li> element containing text. */
+/** 
+ * Creates an <li> element containing text and author. 
+ * Each element corresponds to a comment to be displayed in the DOM.
+ */
 function createListElement(text, author) {
   const liElement = document.createElement('li');
   liElement.setAttribute('class', 'list-group-item');
