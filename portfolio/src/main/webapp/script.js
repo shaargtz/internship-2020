@@ -16,20 +16,10 @@
  * Sends the user to a random Youtube video on a different tab.
  */
 async function sendToRandomVideo() {
-  const videos = [
-    "https://www.youtube.com/watch?v=Ng_Im-qsWzc&list=LLGpjNAdp_solk9m7e4SaPsg&index=8",
-    "https://www.youtube.com/watch?v=sYd_-pAfbBw&list=LLGpjNAdp_solk9m7e4SaPsg&index=48",
-    "https://www.youtube.com/watch?v=xuCn8ux2gbs&list=LLGpjNAdp_solk9m7e4SaPsg&index=61",
-    "https://www.youtube.com/watch?v=huEtJw7pfLk&list=LLGpjNAdp_solk9m7e4SaPsg&index=68",
-    "https://www.youtube.com/watch?v=Uu5zGHjRaMo&list=LLGpjNAdp_solk9m7e4SaPsg&index=22",
-  ];
-
   const response = await fetch('/video');
-  const indexJSON = await response.json();
+  const videoJSON = await response.json();
 
-  const randomVideo = videos[indexJSON.nextVideoIndex];
-
-  window.open(randomVideo);
+  window.open(videoJSON.videoURL);
 }
 
 /**
