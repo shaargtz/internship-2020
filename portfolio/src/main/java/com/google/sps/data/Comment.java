@@ -1,6 +1,6 @@
 package com.google.sps.servlets;
 
-/** Object for a single comment. */
+/** Object for a single comment. Used for JSON conversion in the servlet. */
 public final class Comment {
 
   private final String text;
