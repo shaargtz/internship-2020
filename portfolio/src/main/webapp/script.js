@@ -18,7 +18,6 @@
 async function sendToRandomVideo() {
   const response = await fetch('/video');
   const videoJSON = await response.json();
-
   window.open(videoJSON.videoURL);
 }
 

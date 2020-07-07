@@ -30,7 +30,6 @@ public class VideoServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     Random randomGenerator = new Random();
 
     // Generate a random index from the videos array.
