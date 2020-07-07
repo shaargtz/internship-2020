@@ -22,22 +22,32 @@ async function sendToRandomVideo() {
 }
 
 /**
- * Fetches comments from server and adds them to the DOM.
+ * Fetches comments from server, wraps each in an <li> element, 
+ * and adds them to the DOM.
  */
 async function fetchComments() {
   const response = await fetch('/data');
   const commentsObject = await response.json();
   const commentsContainer = document.getElementById('comments-list');
   commentsContainer.innerHTML = '';
-  commentsObject.comments.forEach(comment => {
-    commentsContainer.appendChild(createListElement(comment));
+  commentsObject.forEach(comment => {
+    commentsContainer.appendChild(createListElement(
+      comment.text, comment.author));
   });
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
+/** 
+ * Creates an <li> element containing text and author. 
+ * Each element corresponds to a comment to be displayed in the DOM.
+ */
+function createListElement(text, author) {
   const liElement = document.createElement('li');
   liElement.setAttribute('class', 'list-group-item');
   liElement.innerText = text;
+  const smallElement = document.createElement('small');
+  smallElement.setAttribute('class', 'text-muted');
+  smallElement.innerText = author;
+  liElement.appendChild(document.createElement('br'));
+  liElement.appendChild(smallElement);
   return liElement;
 }
