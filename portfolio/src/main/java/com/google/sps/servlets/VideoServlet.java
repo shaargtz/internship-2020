@@ -28,6 +28,11 @@ public class VideoServlet extends HttpServlet {
         "https://www.youtube.com/watch?v=Uu5zGHjRaMo&list=LLGpjNAdp_solk9m7e4SaPsg&index=22"
   ));
 
+  /**
+   * Randomly selects an element from videos, checks that it isn't the same
+   * as the last selected video, and sends the URL as json through a GET
+   * request.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Random randomGenerator = new Random();
