@@ -29,10 +29,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. */
+/**
+ * Servlet that handles uploading user comments to Datastore and querying
+ * existing comments to send them as JSON to the client.
+ */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  /**
+  * Queries Datastore and sends existing comments to the client in 
+  * JSON string format.
+  */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
@@ -59,6 +66,10 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
+  /**
+  * Receives user comments from the client and uploads them to Datastore as
+  * a 'Comment' entity.
+  */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String commentString = request.getParameter("comment-input");
