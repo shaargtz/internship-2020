@@ -13,6 +13,13 @@
 // limitations under the License.
 
 /**
+ * Function that calls other functions neede when the page loads.
+ */
+function onBodyLoad() {
+
+}
+
+/**
  * Sends the user to a random Youtube video on a different tab.
  */
 async function sendToRandomVideo() {
