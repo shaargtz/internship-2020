@@ -16,7 +16,17 @@
  * Function that calls other functions neede when the page loads.
  */
 function onBodyLoad() {
+  fetchComments();
+  createMap();
+}
 
+/**
+ * Creates a map and adds it to the page.
+ */
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
 }
 
 /**
