@@ -34,6 +34,7 @@ function createMap() {
       document.getElementById('map'), {
         center: {lat: 25.650955, lng: -100.289508},
         zoom: 16,
+        styles: mapStyles,
       });
 }
 
