@@ -21,7 +21,7 @@ import mapStyles from './mapStyles.js'
 /**
  * Function that calls other functions needed when the page loads.
  */
-function onBodyLoad() {
+window.onBodyLoad = function () {
   fetchComments();
   createMap();
 }
