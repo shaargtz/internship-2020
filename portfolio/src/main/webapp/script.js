@@ -13,6 +13,25 @@
 // limitations under the License.
 
 /**
+ * Function that calls other functions neede when the page loads.
+ */
+function onBodyLoad() {
+  fetchComments();
+  createMap();
+}
+
+/**
+ * Creates a map and adds it to the page.
+ */
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'), {
+        center: {lat: 25.650955, lng: -100.289508},
+        zoom: 16,
+      });
+}
+
+/**
  * Sends the user to a random Youtube video on a different tab.
  */
 async function sendToRandomVideo() {
