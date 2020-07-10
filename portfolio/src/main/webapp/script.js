@@ -13,6 +13,12 @@
 // limitations under the License.
 
 /**
+ * Get the styles from another file to improve readability and 
+ * for making changes more easily.
+ */
+import mapStyles from './mapStyles.js'
+
+/**
  * Function that calls other functions neede when the page loads.
  */
 function onBodyLoad() {
