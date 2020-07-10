@@ -19,7 +19,7 @@
 import mapStyles from './mapStyles.js'
 
 /**
- * Function that calls other functions neede when the page loads.
+ * Function that calls other functions needed when the page loads.
  */
 function onBodyLoad() {
   fetchComments();
