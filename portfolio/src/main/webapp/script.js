@@ -13,9 +13,15 @@
 // limitations under the License.
 
 /**
- * Function that calls other functions neede when the page loads.
+ * Get the styles from another file to improve readability and 
+ * for making changes more easily.
  */
-function onBodyLoad() {
+import mapStyles from './mapStyles.js'
+
+/**
+ * Function that calls other functions needed when the page loads.
+ */
+window.onBodyLoad = function () {
   fetchComments();
   createMap();
 }
@@ -28,6 +34,7 @@ function createMap() {
       document.getElementById('map'), {
         center: {lat: 25.650955, lng: -100.289508},
         zoom: 16,
+        styles: mapStyles,
       });
 }
 
