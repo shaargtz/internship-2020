@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class VideoServlet extends HttpServlet {
   private LinkedHashMap<Integer, Integer> memeSearchTrend = new LinkedHashMap<>();
 
+  /** Parses csv data a single time instead of on every request.*/
   @Override
   public void init() {
     Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
@@ -30,6 +31,7 @@ public class VideoServlet extends HttpServlet {
     scanner.close();
   }
 
+  /** Sends parsed data in JSON format.*/
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
