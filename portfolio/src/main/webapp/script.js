@@ -56,7 +56,7 @@ function drawChart() {
     });
 
     const options = {
-      'title': 'Trend for the search "Meme"',
+      'title': 'Trend for the search term "meme"',
       'height':400
     };
 
