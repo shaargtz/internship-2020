@@ -12,5 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that gets data from a csv and parses it as to use it in a chart.*/
 @WebServlet("/chart-data")
 public class VideoServlet extends HttpServlet {
-  
+  private LinkedHashMap<Integer, Integer> memeSearchTrend = new LinkedHashMap<>();
+
+  @Override
+  public void init() {
+    Scanner scanner = new Scanner(getServletContext().getResourceAsStream(
+        "/WEB-INF/meme-trend.csv"));
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      String[] cells = line.split(",");
+
+      String date = cells[0];
+      Integer interest = Integer.valueOf(cells[1]);
+
+      memeSearchTrend.put(date, interest);
+    }
+    scanner.close();
+  }
+
 }
