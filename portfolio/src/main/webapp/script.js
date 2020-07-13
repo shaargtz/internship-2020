@@ -46,23 +46,22 @@ function createMap() {
  * Draws a chart and adds it to the page.
  */
 function drawChart() {
-  fetch('/chart-data').then(response => response.json())
-  .then((memeSearchTrend) => {
-    const data = new google.visualization.DataTable();
-    data.addColumn('date', 'Date');
-    data.addColumn('number', 'interest');
-    Object.keys(memeSearchTrend).forEach((date) => {
-      data.addRow([new Date(date), memeSearchTrend[date]]);
-    });
-    const options = {
-      'title': 'Trend for the search "Meme"',
-      'height':400
-    };
+  const data = new google.visualization.DataTable();
+  data.addColumn('date', 'Year');
+  data.addColumn('number', 'Interest');
+        data.addRow([new Date(2020, 1), 85]);
+        data.addRow([new Date(2020, 2), 85]);
+        data.addRow([new Date(2020, 3), 97]);
+        data.addRow([new Date(2020, 4), 100]);
 
-    const chart = new google.visualization.LineChart(
-        document.getElementById('chart-container'));
-    chart.draw(data, options);
-  });
+  const options = {
+    'title': 'Trend for the search "Meme"',
+    'height':400
+  };
+
+  const chart = new google.visualization.LineChart(
+      document.getElementById('chart-container'));
+  chart.draw(data, options);
 }
 
 /**
