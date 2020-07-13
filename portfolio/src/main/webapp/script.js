@@ -43,7 +43,8 @@ function createMap() {
 }
 
 /**
- * Draws a chart and adds it to the page.
+ * Draws a chart and adds it to the page. Currently uses hardcoded data.
+ * TODO: get data from server.
  */
 function drawChart() {
   const data = new google.visualization.DataTable();
