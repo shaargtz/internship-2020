@@ -24,6 +24,10 @@ import mapStyles from './mapStyles.js'
 window.onBodyLoad = function () {
   fetchComments();
   createMap();
+
+  // Functions to load the Charts API
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
 }
 
 /**
