@@ -49,10 +49,10 @@ function drawChart() {
   const data = new google.visualization.DataTable();
   data.addColumn('date', 'Year');
   data.addColumn('number', 'Interest');
-        data.addRow([new Date(2020, 1), 85]);
-        data.addRow([new Date(2020, 2), 85]);
-        data.addRow([new Date(2020, 3), 97]);
-        data.addRow([new Date(2020, 4), 100]);
+  data.addRow([new Date(2020, 1), 85]);
+  data.addRow([new Date(2020, 2), 85]);
+  data.addRow([new Date(2020, 3), 97]);
+  data.addRow([new Date(2020, 4), 100]);
 
   const options = {
     'title': 'Trend for the search "Meme"',
