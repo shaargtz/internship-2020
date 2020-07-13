@@ -30,4 +30,11 @@ public class VideoServlet extends HttpServlet {
     scanner.close();
   }
 
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json");
+    Gson gson = new Gson();
+    String json = gson.toJson(memeSearchTrend);
+    response.getWriter().println(json);
+  }
 }
