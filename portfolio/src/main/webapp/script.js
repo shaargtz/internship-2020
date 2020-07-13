@@ -24,6 +24,7 @@ import mapStyles from './mapStyles.js'
 window.onBodyLoad = function () {
   fetchComments();
   createMap();
+  drawChart();
 }
 
 /**
@@ -36,6 +37,13 @@ function createMap() {
         zoom: 16,
         styles: mapStyles,
       });
+}
+
+/**
+ * Draws a chart and adds it to the page.
+ */
+function drawChart() {
+  
 }
 
 /**
