@@ -43,7 +43,8 @@ function createMap() {
 }
 
 /**
- * Draws a chart and adds it to the page.
+ * Gets year:interest pairs from the server and draws a line chart
+ * with them.
  */
 function drawChart() {
   fetch('/chart-data').then(response => response.json())
