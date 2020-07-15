@@ -55,14 +55,15 @@ function drawChart() {
   data.addRow([new Date(2020, 3), 97]);
   data.addRow([new Date(2020, 4), 100]);
 
-  const options = {
-    'title': 'Trend for the search "Meme"',
-    'height':400
-  };
+    const options = {
+      'title': 'Trend for the search term "meme"',
+      'height':400
+    };
 
-  const chart = new google.visualization.LineChart(
-      document.getElementById('chart-container'));
-  chart.draw(data, options);
+    const chart = new google.visualization.LineChart(
+        document.getElementById('chart-container'));
+    chart.draw(data, options);
+  });
 }
 
 /**
