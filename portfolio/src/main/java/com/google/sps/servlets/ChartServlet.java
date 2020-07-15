@@ -18,7 +18,7 @@ public class ChartServlet extends HttpServlet {
 
   /**
    * Parses csv data a single time instead of on every request.
-   * The file should be in the format date, interest level.
+   * The file should be in the format <date, interest level>.
    * Date must be in any format that makes it a valid string for the
    * Date() constructor, and at least have year and month.
    * Interest level must be an integer.
