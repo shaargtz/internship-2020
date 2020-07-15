@@ -40,4 +40,14 @@ public final class GreeterTest {
     // Whitespace should be trimmed
     Assert.assertEquals("Hello Ada", greeting);
   }
+
+  @Test
+  public void testGreetingRemoveSymbols() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("$Ad#a@");
+
+    // Whitespace should be trimmed
+    Assert.assertEquals("Hello Ada", greeting);
+  }
 }
