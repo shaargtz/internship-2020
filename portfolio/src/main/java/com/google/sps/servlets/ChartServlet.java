@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/chart-data")
 public class ChartServlet extends HttpServlet {
 
-  // Ordered map that stores search trends for the word 'meme' keyed by year.
+  /** 
+   * Ordered map that stores search trends for the word 'meme' 
+   * keyed by year and month.
+   */
   private LinkedHashMap<String, Integer> memeSearchTrend = new LinkedHashMap<>();
 
   /**
