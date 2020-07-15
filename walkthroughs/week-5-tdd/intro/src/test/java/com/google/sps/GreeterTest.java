@@ -37,7 +37,7 @@ public final class GreeterTest {
 
     String greeting = greeter.greet("   Ada   ");
 
-    // Whitespace should be trimmed
+    // Whitespace should be trimmed.
     Assert.assertEquals("Hello Ada", greeting);
   }
 
@@ -47,7 +47,7 @@ public final class GreeterTest {
 
     String greeting = greeter.greet("$Ad#a@");
 
-    // Whitespace should be trimmed
+    // Symbols should be removed.
     Assert.assertEquals("Hello Ada", greeting);
   }
 }
