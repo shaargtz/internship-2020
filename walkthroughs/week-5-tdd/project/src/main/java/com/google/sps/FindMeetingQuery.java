@@ -39,5 +39,7 @@ public final class FindMeetingQuery {
      * so the meeting cannot be held.
      */
     if (request.getAttendees().isEmpty()) return Arrays.asList();
+
+    throw new UnsupportedOperationException("This test isn't being tested now.");
   }
 }
