@@ -38,7 +38,7 @@ public final class FindMeetingQuery {
      * Check edge case that the duration of the meeting is longer than a day,
      * so the meeting cannot be held.
      */
-    if (request.getAttendees().isEmpty()) return Arrays.asList();
+    if (request.getDuration() > 24) return Arrays.asList();
 
     throw new UnsupportedOperationException("This test isn't being tested now.");
   }
