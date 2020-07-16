@@ -32,12 +32,12 @@ public final class FindMeetingQuery {
      * Check edge case that there are no attendees for the meeting, so it can
      * be held at any time.
      */
-    if (meeting.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+    if (request.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
 
     /** 
      * Check edge case that the duration of the meeting is longer than a day,
      * so the meeting cannot be held.
      */
-    if (meeting.getAttendees().isEmpty()) return Arrays.asList();
+    if (request.getAttendees().isEmpty()) return Arrays.asList();
   }
 }
