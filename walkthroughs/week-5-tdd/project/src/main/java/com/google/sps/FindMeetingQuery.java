@@ -18,6 +18,22 @@ import java.util.Collection;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    /** 
+     * Check edge case that there are no other events, so the meeting can
+     * be held at any time.
+     */
+    if (events.isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+
+    /** 
+     * Check edge case that there are no attendees for the meeting, so it can
+     * be held at any time.
+     */
+    if (meeting.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+
+    /** 
+     * Check edge case that the duration of the meeting is longer than a day,
+     * so the meeting cannot be held.
+     */
+    if (meeting.getAttendees().isEmpty()) return Arrays.asList();
   }
 }
