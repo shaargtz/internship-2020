@@ -95,6 +95,9 @@ public final class Event {
     return a.title.equals(b.title) && a.when.equals(b.when) && a.attendees.equals(b.attendees);
   }
 
+  /**
+   * A comparator for sorting events by their start time in ascending order.
+   */
   public static final Comparator<Event> ORDER_BY_START = new Comparator<Event>() {
     @Override
     public int compare(Event a, Event b) {
