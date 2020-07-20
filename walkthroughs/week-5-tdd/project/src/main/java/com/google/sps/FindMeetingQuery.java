@@ -25,12 +25,12 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<Event> eventList = new ArrayList(events);
 
-    // Collections.sort(eventList, new Comparator<Event>() {
-    //   @Override
-    //   public int compare(Event event1, Event event2) {
-    //     return event1.getWhen().start() - event2.getWhen().start();
-    //   }
-    // });
+    Collections.sort(eventList, new Comparator<Event>() {
+      @Override
+      public int compare(Event event1, Event event2) {
+        return event1.getWhen().start() - event2.getWhen().start();
+      }
+    });
 
     int currentRangeStart = TimeRange.START_OF_DAY;
     int currentRangeEnd;
