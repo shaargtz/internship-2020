@@ -58,6 +58,12 @@ public final class FindMeetingQuery {
       }
     }
 
+    currentRangeEnd = TimeRange.END_OF_DAY;
+    currentRangeDuration = currentRangeEnd - currentRangeStart;
+    if (currentRangeDuration >= request.getDuration()) {
+      availableTimes.add(
+        TimeRange.fromStartEnd(currentRangeStart, currentRangeEnd, true));
+    }
 
     return availableTimes;
   }
