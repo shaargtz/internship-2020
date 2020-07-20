@@ -18,10 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+  public Collection<TimeRange> query(List<Event> events, MeetingRequest request) {
     /** 
      * Check edge case that there are no other events, so the meeting can
      * be held at any time.
@@ -40,6 +41,11 @@ public final class FindMeetingQuery {
      */
     if (request.getDuration() > 24) return Arrays.asList();
 
-    throw new UnsupportedOperationException("This test isn't being tested now.");
+    Collections.sort(events, new Comparator<Event>() {
+      @Override
+      public int compare(Event event1, Event event2) {
+        return event2.getWhen().start() - event1.getWhen().start();
+      }
+    });
   }
 }
