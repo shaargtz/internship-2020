@@ -36,11 +36,21 @@ public final class FindMeetingQuery {
     int currentRangeEnd;
     int currentRangeDuration;
 
+    boolean sharesAttendees;
 
     List<TimeRange> availableTimes = new ArrayList<>();
 
     for (Event event : eventList) {
+      sharesAttendees = false;
 
+      for (String person : event.getAttendees()) {
+        if (request.getAttendees().contains(person)) {
+          sharesAttendees = true;
+          break;
+        }
+      }
+
+      if (!sharesAttendees) continue;
 
       currentRangeEnd = event.getWhen().start();
       currentRangeDuration = currentRangeEnd - currentRangeStart;
