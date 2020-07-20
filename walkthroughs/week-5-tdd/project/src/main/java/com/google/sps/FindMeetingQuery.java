@@ -22,30 +22,17 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query(List<Event> events, MeetingRequest request) {
-    /** 
-     * Check edge case that there are no other events, so the meeting can
-     * be held at any time.
-     */
-    if (events.isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
+  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+    List<Event> eventList = new ArrayList(events);
 
-    /** 
-     * Check edge case that there are no attendees for the meeting, so it can
-     * be held at any time.
-     */
-    if (request.getAttendees().isEmpty()) return Arrays.asList(TimeRange.WHOLE_DAY);
-
-    /** 
-     * Check edge case that the duration of the meeting is longer than a day,
-     * so the meeting cannot be held.
-     */
-    if (request.getDuration() > 24) return Arrays.asList();
-
-    Collections.sort(events, new Comparator<Event>() {
+    Collections.sort(eventList, new Comparator<Event>() {
       @Override
       public int compare(Event event1, Event event2) {
         return event2.getWhen().start() - event1.getWhen().start();
       }
     });
+
+
+
   }
 }
