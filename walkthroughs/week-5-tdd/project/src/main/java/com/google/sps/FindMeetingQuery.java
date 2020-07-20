@@ -32,7 +32,33 @@ public final class FindMeetingQuery {
       }
     });
 
+    int currentRangeStart = TimeRange.START_OF_DAY;
+    int currentRangeEnd;
+    int currentRangeDuration;
 
 
+    List<TimeRange> availableTimes = new ArrayList<>();
+
+    for (Event event : eventList) {
+
+
+      currentRangeEnd = event.getWhen().start();
+      currentRangeDuration = currentRangeEnd - currentRangeStart;
+
+      if (currentRangeEnd >= currentRangeStart) {
+        if (currentRangeDuration >= request.getDuration()) {
+          availableTimes.add(
+            TimeRange.fromStartDuration(currentRangeStart, currentRangeDuration));
+        }
+        currentRangeStart = event.getWhen().end();
+      } else {
+        if (event.getWhen().end() > currentRangeStart) {
+          currentRangeStart = event.getWhen().end();
+        }
+      }
+    }
+
+
+    return availableTimes;
   }
 }
