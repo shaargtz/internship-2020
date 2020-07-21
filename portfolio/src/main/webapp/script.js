@@ -70,7 +70,7 @@ function drawChart() {
 /**
  * Sends the user to a random Youtube video on a different tab.
  */
-async function sendToRandomVideo() {
+window.sendToRandomVideo  = async function() {
   const response = await fetch('/video');
   const videoJSON = await response.json();
   window.open(videoJSON.videoURL);
