@@ -103,8 +103,7 @@ public final class FindMeetingQuery {
     // Now we just need to check the time from the end of the last meeting
     // until end of day, basically doing the same procedure as before.
     currentRangeEnd = TimeRange.END_OF_DAY;
-    currentRangeDuration = currentRangeEnd - currentRangeStart;
-    if (currentRangeDuration >= request.getDuration()) {
+    if (currentRangeEnd - currentRangeStart >= request.getDuration()) {
       availableTimes.add(TimeRange.fromStartEnd(
           currentRangeStart, currentRangeEnd, /*inclusive=*/true));
     }
