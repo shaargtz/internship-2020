@@ -35,6 +35,17 @@ public final class FindMeetingQuery {
      * currentRangeDuration is at least the same size as the duration of the
      * request, a TimeRange from currentRangeStart to currentRangeEnd is
      * added to the list of available times.
+     *
+     * Time complexity: 
+     * n: number of events
+     * m: number of attendees in every event
+     * If m > logn, then O(nm)
+     * Otherwise, O(nlogn)
+     *
+     * Space complexity:
+     * n: number of events
+     * m: number of available time ranges
+     * O(m+n)
      */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<Event> eventList = new ArrayList(events);
