@@ -35,20 +35,14 @@ public final class FindMeetingQuery {
     }
   };
   /**
-   * The way the query works is by going through the sorted events, and
-   * if the current event does not have any of the people in the meeting
-   * request, the event is skipped. If it does share people with the request,
-   * availableTimeDuration is set to the available time from the end of the
-   * previous event until the start of the current event. Then, if
-   * availableTimeDuration is at least the same size as the duration of the
-   * request, a TimeRange from pastEventEnd to currentEventStart is
-   * added to the list of available times.
+   * Given a set of events and a meeting request, the query returns a list of
+   * free time ranges available for the meeting to be scheduled. If no valid
+   * time range is found, returns an empty list.
    *
    * Time complexity: 
    * n: number of events
    * m: number of attendees in every event
-   * If m > logn, then O(nm)
-   * Otherwise, O(nlogn)
+   * O(nm)
    *
    * Space complexity:
    * n: number of events
@@ -56,9 +50,11 @@ public final class FindMeetingQuery {
    * O(m+n)
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+    // We pass the events into a list since the collection can't be sorted,
+    // and we sort the list by event start time in ascending order.
     List<Event> eventList = new ArrayList(events);
-    // Here eventList is sorted by event start time in ascending order.
     Collections.sort(eventList, eventComparator);
+
     // Since there are no previous events yet, the start of day is also the
     // start of the first range to check available time.
     int pastEventEnd = TimeRange.START_OF_DAY;
@@ -66,38 +62,32 @@ public final class FindMeetingQuery {
     int availableTimeDuration;
     List<TimeRange> availableTimes = new ArrayList<>();
     for (Event event : eventList) {
-      // If the event does not share attendes with the request, it means that
-      // it does not change time availability, so it's skipped.
-      if (!eventSharesAttendeesWithRequest(event, request)) continue;
-      // Available time goes from the end of the previous event to the start of
-      // the current event.
+      if (!eventSharesAttendeesWithRequest(event, request)) {
+        // If the event does not share attendes with the request, it means that
+        // it does not change time availability, so it's skipped.
+        continue;
+      }
       currentEventStart = event.getWhen().start();
       availableTimeDuration = currentEventStart - pastEventEnd;
-      // This case is if the current event starts after the previous one ends.
-      // Example: |--A--|   |--B--|
+
       if (currentEventStart > pastEventEnd) {
+        // Example: |--A--|   |--B--|
         if (availableTimeDuration >= request.getDuration()) {
           availableTimes.add(TimeRange.fromStartDuration(
               pastEventEnd, availableTimeDuration));
         }
-        // Regadrdless of whether the duration was enough for the meeting,
-        // the next available time will start when the current event ends.
         pastEventEnd = event.getWhen().end();
       } 
-      // If there is no room from the previous event to the current event,
-      // we just change the beginning of the next available time.
-      // Example: |--A--|--B--|
       else if (currentEventStart == pastEventEnd) {
+        // Example: |--A--|--B--|
         pastEventEnd = event.getWhen().end();
       }
-      // This case is if the current event begins before the previous one ends
-      // and the current event isn't absorbed by the previous one, meaning that
-      // the next beginning of the next available time is changed.
-      // Example: |--A--|
-      //              |--B--|
       else if (event.getWhen().end() > pastEventEnd) {
+        // Example: |--A--|
+        //              |--B--|
         pastEventEnd = event.getWhen().end();
       }
+
       // There is no else, since would mean that the current event is
       // completely absorbed by the previous event, meaning that the next
       // available time still starts when the previous event ends.
