@@ -26,36 +26,39 @@ import java.util.List;
  * meeting request coincides with available time.
  */
 public final class FindMeetingQuery {
+  // This comparator is used to sort a list of events by start time
+  // in ascending order.
+  private Comparator<Event> eventComparator = new Comparator<Event>() {
+    @Override
+    public int compare(Event event1, Event event2) {
+      return event1.getWhen().start() - event2.getWhen().start();
+    }
+  };
   /**
-     * The way the query works is by going through the sorted events, and
-     * if the current event does not have any of the people in the meeting
-     * request, the event is skipped. If it does share people with the request,
-     * availableTimeDuration is set to the available time from the end of the
-     * previous event until the start of the current event. Then, if
-     * availableTimeDuration is at least the same size as the duration of the
-     * request, a TimeRange from pastEventEnd to currentEventStart is
-     * added to the list of available times.
-     *
-     * Time complexity: 
-     * n: number of events
-     * m: number of attendees in every event
-     * If m > logn, then O(nm)
-     * Otherwise, O(nlogn)
-     *
-     * Space complexity:
-     * n: number of events
-     * m: number of available time ranges
-     * O(m+n)
-     */
+   * The way the query works is by going through the sorted events, and
+   * if the current event does not have any of the people in the meeting
+   * request, the event is skipped. If it does share people with the request,
+   * availableTimeDuration is set to the available time from the end of the
+   * previous event until the start of the current event. Then, if
+   * availableTimeDuration is at least the same size as the duration of the
+   * request, a TimeRange from pastEventEnd to currentEventStart is
+   * added to the list of available times.
+   *
+   * Time complexity: 
+   * n: number of events
+   * m: number of attendees in every event
+   * If m > logn, then O(nm)
+   * Otherwise, O(nlogn)
+   *
+   * Space complexity:
+   * n: number of events
+   * m: number of available time ranges
+   * O(m+n)
+   */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<Event> eventList = new ArrayList(events);
     // Here eventList is sorted by event start time in ascending order.
-    Collections.sort(eventList, new Comparator<Event>() {
-      @Override
-      public int compare(Event event1, Event event2) {
-        return event1.getWhen().start() - event2.getWhen().start();
-      }
-    });
+    Collections.sort(eventList, eventComparator);
     // Since there are no previous events yet, the start of day is also the
     // start of the first range to check available time.
     int pastEventEnd = TimeRange.START_OF_DAY;
@@ -63,18 +66,11 @@ public final class FindMeetingQuery {
     int availableTimeDuration;
     List<TimeRange> availableTimes = new ArrayList<>();
     for (Event event : eventList) {
-      // Initialized as false since nothing has been compared yet.
-      boolean sharesAttendees = false;
-      for (String person : event.getAttendees()) {
-        if (request.getAttendees().contains(person)) {
-          sharesAttendees = true;
-          break;
-        }
-      }
-      // If the event does not conflict with the attendees, it's skipped.
-      if (!sharesAttendees) continue;
-      // Available time goes from the end of the previous event to the current
-      // event.
+      // If the event does not share attendes with the request, it means that
+      // it does not change time availability, so it's skipped.
+      if (!eventSharesAttendeesWithRequest(event, request)) continue;
+      // Available time goes from the end of the previous event to the start of
+      // the current event.
       currentEventStart = event.getWhen().start();
       availableTimeDuration = currentEventStart - pastEventEnd;
       // This case is if the current event starts after the previous one ends.
@@ -118,5 +114,18 @@ public final class FindMeetingQuery {
     }
 
     return availableTimes;
+  }
+
+  /**
+   * This is a helper function to check if an event shares attendees with
+   * a meeting request.
+   */
+  private boolean eventSharesAttendeesWithRequest(Event event, MeetingRequest request) {
+    for (String attendee : event.getAttendees()) {
+      if (request.getAttendees().contains(attendee)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
