@@ -77,9 +77,9 @@ public final class FindMeetingQuery {
       // event.
       currentRangeEnd = event.getWhen().start();
       currentRangeDuration = currentRangeEnd - currentRangeStart;
-      // This case is if the current event begins at least when the previous
-      // one ends.
-      if (currentRangeEnd >= currentRangeStart) {
+      // This case is if the current event starts after the previous one ends.
+      // Example: |--A--|   |--B--|
+      if (currentRangeEnd > currentRangeStart) {
         if (currentRangeDuration >= request.getDuration()) {
           availableTimes.add(TimeRange.fromStartDuration(
               currentRangeStart, currentRangeDuration));
@@ -88,16 +88,25 @@ public final class FindMeetingQuery {
         // the next available time will start when the current event ends.
         currentRangeStart = event.getWhen().end();
       } 
-      // This case is if the current event begins before the previous one ends.
-      else {
-        // Just to check whether to change the next available time or not.
-        // There is no else, since that case is when the current event is
-        // completely absorbed by the previous event, meaning that the next
-        // available time still starts when the previous event ends.
-        if (event.getWhen().end() > currentRangeStart) {
-          currentRangeStart = event.getWhen().end();
-        }
+      // If there is no room from the previous event to the current event,
+      // we just push the beginning of the next available time.
+      // Example: |--A--|--B--|
+      else if (currentRangeEnd == currentRangeStart) {
+        currentRangeStart = event.getWhen().end();
       }
+      // This case is if the current event begins before the previous one ends
+      // and the current event isn't absorbed by the previous one, meaning that
+      // the next beginning of the next available time is pushed.
+      // Example: |--A--|
+      //              |--B--|
+      else if (event.getWhen().end() > currentRangeStart) {
+        currentRangeStart = event.getWhen().end();
+      }
+      // There is no else, since would mean that the current event is
+      // completely absorbed by the previous event, meaning that the next
+      // available time still starts when the previous event ends.
+      // Example: |----A----|
+      //            |--B--|
     }
 
     // Now we just need to check the time from the end of the last meeting
