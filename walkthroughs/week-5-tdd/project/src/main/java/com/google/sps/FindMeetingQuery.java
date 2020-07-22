@@ -27,13 +27,13 @@ import java.util.List;
  */
 public final class FindMeetingQuery {
   /**
-     * The way the query works is by going through the sorted events,
+     * The way the query works is by going through the sorted events, and
      * if the current event does not have any of the people in the meeting
      * request, the event is skipped. If it does share people with the request,
-     * currentRangeDuration is set to the available time from the end of the
+     * availableTimeDuration is set to the available time from the end of the
      * previous event until the start of the current event. Then, if
-     * currentRangeDuration is at least the same size as the duration of the
-     * request, a TimeRange from currentRangeStart to currentRangeEnd is
+     * availableTimeDuration is at least the same size as the duration of the
+     * request, a TimeRange from pastEventEnd to currentEventStart is
      * added to the list of available times.
      *
      * Time complexity: 
@@ -58,9 +58,9 @@ public final class FindMeetingQuery {
     });
     // Since there are no previous events yet, the start of day is also the
     // start of the first range to check available time.
-    int currentRangeStart = TimeRange.START_OF_DAY;
-    int currentRangeEnd;
-    int currentRangeDuration;
+    int pastEventEnd = TimeRange.START_OF_DAY;
+    int currentEventStart;
+    int availableTimeDuration;
     List<TimeRange> availableTimes = new ArrayList<>();
     for (Event event : eventList) {
       // Initialized as false since nothing has been compared yet.
@@ -75,32 +75,32 @@ public final class FindMeetingQuery {
       if (!sharesAttendees) continue;
       // Available time goes from the end of the previous event to the current
       // event.
-      currentRangeEnd = event.getWhen().start();
-      currentRangeDuration = currentRangeEnd - currentRangeStart;
+      currentEventStart = event.getWhen().start();
+      availableTimeDuration = currentEventStart - pastEventEnd;
       // This case is if the current event starts after the previous one ends.
       // Example: |--A--|   |--B--|
-      if (currentRangeEnd > currentRangeStart) {
-        if (currentRangeDuration >= request.getDuration()) {
+      if (currentEventStart > pastEventEnd) {
+        if (availableTimeDuration >= request.getDuration()) {
           availableTimes.add(TimeRange.fromStartDuration(
-              currentRangeStart, currentRangeDuration));
+              pastEventEnd, availableTimeDuration));
         }
         // Regadrdless of whether the duration was enough for the meeting,
         // the next available time will start when the current event ends.
-        currentRangeStart = event.getWhen().end();
+        pastEventEnd = event.getWhen().end();
       } 
       // If there is no room from the previous event to the current event,
-      // we just push the beginning of the next available time.
+      // we just change the beginning of the next available time.
       // Example: |--A--|--B--|
-      else if (currentRangeEnd == currentRangeStart) {
-        currentRangeStart = event.getWhen().end();
+      else if (currentEventStart == pastEventEnd) {
+        pastEventEnd = event.getWhen().end();
       }
       // This case is if the current event begins before the previous one ends
       // and the current event isn't absorbed by the previous one, meaning that
-      // the next beginning of the next available time is pushed.
+      // the next beginning of the next available time is changed.
       // Example: |--A--|
       //              |--B--|
-      else if (event.getWhen().end() > currentRangeStart) {
-        currentRangeStart = event.getWhen().end();
+      else if (event.getWhen().end() > pastEventEnd) {
+        pastEventEnd = event.getWhen().end();
       }
       // There is no else, since would mean that the current event is
       // completely absorbed by the previous event, meaning that the next
@@ -111,10 +111,10 @@ public final class FindMeetingQuery {
 
     // Now we just need to check the time from the end of the last meeting
     // until end of day, basically doing the same procedure as before.
-    currentRangeEnd = TimeRange.END_OF_DAY;
-    if (currentRangeEnd - currentRangeStart >= request.getDuration()) {
+    currentEventStart = TimeRange.END_OF_DAY;
+    if (currentEventStart - pastEventEnd >= request.getDuration()) {
       availableTimes.add(TimeRange.fromStartEnd(
-          currentRangeStart, currentRangeEnd, /*inclusive=*/true));
+          pastEventEnd, currentEventStart, /*inclusive=*/true));
     }
 
     return availableTimes;
