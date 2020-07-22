@@ -58,8 +58,6 @@ public final class FindMeetingQuery {
     // Since there are no previous events yet, the start of day is also the
     // start of the first range to check available time.
     int pastEventEnd = TimeRange.START_OF_DAY;
-    int currentEventStart;
-    int availableTimeDuration;
     List<TimeRange> availableTimes = new ArrayList<>();
     for (Event event : eventList) {
       if (!eventSharesAttendeesWithRequest(event, request)) {
@@ -67,9 +65,9 @@ public final class FindMeetingQuery {
         // it does not change time availability, so it's skipped.
         continue;
       }
-      currentEventStart = event.getWhen().start();
-      availableTimeDuration = currentEventStart - pastEventEnd;
 
+      int currentEventStart = event.getWhen().start();
+      int availableTimeDuration = currentEventStart - pastEventEnd;
       if (currentEventStart > pastEventEnd) {
         // Example: |--A--|   |--B--|
         if (availableTimeDuration >= request.getDuration()) {
@@ -78,16 +76,13 @@ public final class FindMeetingQuery {
         }
         pastEventEnd = event.getWhen().end();
       } 
-      else if (currentEventStart == pastEventEnd) {
-        // Example: |--A--|--B--|
+      else if (currentEventStart == pastEventEnd || event.getWhen().end() > pastEventEnd) {
+        //     Examples: |--A--|--B--|
+        //                     or
+        //               |--A--|
+        //                    |--B--|
         pastEventEnd = event.getWhen().end();
       }
-      else if (event.getWhen().end() > pastEventEnd) {
-        // Example: |--A--|
-        //              |--B--|
-        pastEventEnd = event.getWhen().end();
-      }
-
       // There is no else, since would mean that the current event is
       // completely absorbed by the previous event, meaning that the next
       // available time still starts when the previous event ends.
@@ -97,10 +92,9 @@ public final class FindMeetingQuery {
 
     // Now we just need to check the time from the end of the last meeting
     // until end of day, basically doing the same procedure as before.
-    currentEventStart = TimeRange.END_OF_DAY;
-    if (currentEventStart - pastEventEnd >= request.getDuration()) {
+    if (TimeRange.END_OF_DAY - pastEventEnd >= request.getDuration()) {
       availableTimes.add(TimeRange.fromStartEnd(
-          pastEventEnd, currentEventStart, /*inclusive=*/true));
+          pastEventEnd, TimeRange.END_OF_DAY, /*inclusive=*/true));
     }
 
     return availableTimes;
